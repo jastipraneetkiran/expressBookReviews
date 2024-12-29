@@ -37,7 +37,7 @@ regd_users.post("/login", (req, res) => {
     if (authenticatedUser(username, password)) {
         let accessToken = jwt.sign({
             data: username
-        }, 'access', { expiresIn: 60 * 60 });
+        }, jwtSecret, { expiresIn: 60 * 60 });
         // Store access token in session
         req.session.authorization = {
             accessToken
@@ -50,7 +50,29 @@ regd_users.post("/login", (req, res) => {
 // Add a book review
 regd_users.put("/auth/review/:isbn", (req, res) => {
     //Write your code here
-    return res.status(300).json({ message: "Yet to be implemented" });
+    const isbn = req.params.isbn
+    const review = req.query.review
+    const username = req.user.data;
+    if(!isbn || (!review)){
+        return res.status(400).json({error:"isbn or review parameters missing"})
+    }
+    books[isbn].reviews[username] = review;
+    // res.send(JSON.stringify({...books[isbn].reviews},null,4));
+    return res.status(200).json({ message: "review updated successfully" ,data:{...books[isbn].reviews}});
+});
+
+regd_users.delete("/auth/review/:isbn", (req, res) => {
+    //Write your code here
+    const isbn = req.params.isbn
+    const username = req.user.data;
+    if(!isbn){
+        return res.status(400).json({error:"isbn parameter missing"})
+    }
+    if(!books[isbn].reviews[username]){
+        res.status(204).json({message:`No review found for ${username} that could be deleted`})
+    }
+    delete books[isbn].reviews[username];
+    return res.status(200).json({ message: `review for user: ${username} deleted successfully` ,data:{...books[isbn].reviews}});
 });
 
 module.exports.authenticated = regd_users;

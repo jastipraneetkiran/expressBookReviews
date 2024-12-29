@@ -15,12 +15,14 @@ app.use("/customer", session({ secret: "fingerprint_customer", resave: true, sav
 app.use("/customer/auth/*", function auth(req, res, next) {
     //Write the authenication mechanism here
     if (req.session.authorization) {
-        const tkn = req.session.authorization['access_token'];
+        const tkn = req.session.authorization['accessToken'];
         if (!jwtSecret) {
             return res.status(500).json({ error: 'Server misconfiguration: JWT_SECRET is missing.' });
         }
         //Access token
+        console.log(jwtSecret)
         jwt.verify(tkn, jwtSecret, function (err, user) {
+            console.log(err)
             if (err) {
                 return res.status(401).json({ message: "User not authenticated" })
             }

@@ -71,3 +71,13 @@ Test the output on Postman.
 
 Please take a screenshot of the same and save it with the name 7-login.png for submitting under Task 7 for the Peer Review Assignment.
 ```
+
+```
+Task 8:
+Complete the code for adding or modifying a book review.
+Hint: You have to give a review as a request query & it must get posted with the username (stored in the session) posted. If the same user posts a different review on the same ISBN, it should modify the existing review. If another user logs in and posts a review on the same ISBN, it will get added as a different review under the same ISBN.
+
+Test the output on Postman.
+
+Please take a screenshot of the same and save it with the name 8-reviewadded.png for submitting under Task 8 for the Peer Review Assignment.
+```
