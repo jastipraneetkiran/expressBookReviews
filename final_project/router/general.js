@@ -62,7 +62,7 @@ public_users.get('/author/:author', function (req, res) {
     const filterAuthorPromise = new Promise((resolve, reject) => {
         setTimeout(() => {
             const filteredBooks = filterBooksData('author', authorValue)
-            if (!filteredBooks) {
+            if (Object.keys(filteredBooks).length === 0) {
                 reject(new Error("No book match found for the given author"))
             } else {
                 resolve(filteredBooks)
@@ -77,13 +77,32 @@ public_users.get('/author/:author', function (req, res) {
 // Get all books based on title
 public_users.get('/title/:title', function (req, res) {
     //Write your code here
-    return res.status(300).json({ message: "Yet to be implemented" });
+    const titleValue = req.params.title;
+    const filterTitlePromise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const filteredBooks = filterBooksData('title', titleValue)
+            if (Object.keys(filteredBooks).length === 0) {
+                reject(new Error("No book match found for the given title"))
+            } else {
+                resolve(filteredBooks)
+            }
+        }, 1000)
+    })
+    filterTitlePromise.then(bookvals => res.send(JSON.stringify({...bookvals},null,4))).catch((err)=>{
+        res.status(400).json({ error: err.message }); // User-friendly error message
+    })
 });
 
 //  Get book review
 public_users.get('/review/:isbn', function (req, res) {
     //Write your code here
-    return res.status(300).json({ message: "Yet to be implemented" });
+    const isbnVal = req.params.isbn;
+    if(books[isbnVal]){
+        res.send(JSON.stringify({...books[isbnVal]?.reviews},null,4))
+    }else{
+        res.status(400).json({ error: "There is no such ISBN number associate with book for reviews"})
+    }
+    // return res.status(300).json({ message: "Yet to be implemented" });
 });
 
 module.exports.general = public_users;

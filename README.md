@@ -20,3 +20,33 @@ Test the output on Postman.
 
 Please take a screenshot of the same and save it with the name 2-gedetailsISBN.png for submitting under Task 2 for the Peer Review Assignment.
 ```
+
+```
+Task 3:
+Complete the code for getting the book details based on the author under public_users.get('/author/:author',function (req, res) {.
+Hints:
+1. Obtain all the keys for the ‘books’ object.
+2. Iterate through the ‘books’ array & check the author matches the one provided in the request parameters.
+
+Test the output on Postman.
+
+Please take a screenshot of the same and save it with the name 3-getbooksbyauthor.png for submitting under Task 3 for the Peer Review Assignment.
+```
+
+```
+Task 4:
+Complete the code for getting the book details based on the title under public_users.get('/title/:title',function (req, res) {.
+Hint: This will be similar to Exercise 3
+
+Test the output on Postman.
+
+Please take a screenshot of the same and save it with the name 4-getbooksbytitle.png for submitting under Task 4 for the Peer Review Assignment.
+```
+
+```
+Task 5:
+Complete the code for getting book reviews under public_users.get('/review/:isbn',function (req, res) {.
+Hint: Get the book reviews based on ISBN provided in the request parameters.
+
+Please take a screenshot of the same and save it with the name 5-getbookreview.png for submitting under Task 5 for the Peer Review Assignment.
+```
