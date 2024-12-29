@@ -11,9 +11,24 @@ public_users.post("/register", (req,res) => {
 });
 
 // Get the book list available in the shop
-public_users.get('/',function (req, res) {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+public_users.get('/', function (req, res) {
+  // Assuming `books` is a predefined object or array
+  const getBooksList = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (books) {
+        resolve(books); // Resolve with books if defined
+      } else {
+        reject(new Error("Books data not found")); // Reject if books is undefined or null
+      }
+    }, 1000);
+  });
+
+  getBooksList
+    .then((booksVal) => res.json(booksVal)) // Directly send as JSON
+    .catch((err) => {
+      console.error(err.message); // Log error for debugging
+      res.status(500).json({ error: "An error occurred while retrieving books" }); // User-friendly error message
+    });
 });
 
 // Get book details based on ISBN
