@@ -60,3 +60,14 @@ Test the output on Postman.
 
 Please take a screenshot of the same and save it with the name 6-register.png for submitting under Task 6 for the Peer Review Assignment.
 ```
+
+```
+Task 7:
+Complete the code for logging in as a registered user.
+Hint: The code must validate and sign in a customer based on the username and password created in Exercise 6. It must also save the user credentials for the session as a JWT.
+As you are required to login as a customer, while testing the output on Postman, use the endpoint as "customer/login"
+
+Test the output on Postman.
+
+Please take a screenshot of the same and save it with the name 7-login.png for submitting under Task 7 for the Peer Review Assignment.
+```
