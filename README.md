@@ -50,3 +50,13 @@ Hint: Get the book reviews based on ISBN provided in the request parameters.
 
 Please take a screenshot of the same and save it with the name 5-getbookreview.png for submitting under Task 5 for the Peer Review Assignment.
 ```
+
+```
+Task 6:
+Complete the code for registering a new user
+Hint: The code should take the ‘username’ and ‘password’ provided in the body of the request for registration. If the username already exists, it must mention the same & must also show other errors like eg. when username &/ password are not provided.
+
+Test the output on Postman.
+
+Please take a screenshot of the same and save it with the name 6-register.png for submitting under Task 6 for the Peer Review Assignment.
+```

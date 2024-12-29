@@ -6,8 +6,32 @@ const public_users = express.Router();
 
 
 public_users.post("/register", (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+    if(!username || (!password)){
+        return res.status(401).json({error: ` username &/ password are not provided`})
+    }
+    if(isValid(username)){
+        return res.status(409).json({error:`Conflict: User already exists with ${username} please pick another username`})
+    }
+    const userRegisterPromise = new Promise((resolve,reject)=>{
+        if(Array.isArray(users)){
+            const userObj = {username ,password }
+            users.push(userObj)
+            resolve(userObj)
+        }
+        else{
+            reject(new Error("Somthing went wrong while creating user"))
+        }
+    })
+    userRegisterPromise.then((user)=>{
+        return res.status(201).json({message:"User successfully registered. Now you can login"})
+    }).catch((err)=>{
+        return res.status(500).json({ error: err.message }); // User-friendly error message
+    })
+
     //Write your code here
-    return res.status(300).json({ message: "Yet to be implemented" });
+    // return res.status(300).json({ message: "Yet to be implemented" });
 });
 
 // Get the book list available in the shop
@@ -27,7 +51,7 @@ public_users.get('/', function (req, res) {
         .then((booksVal) => res.json(booksVal)) // Directly send as JSON
         .catch((err) => {
             console.error(err.message); // Log error for debugging
-            res.status(500).json({ error: "An error occurred while retrieving books" }); // User-friendly error message
+            return res.status(500).json({ error: "An error occurred while retrieving books" }); // User-friendly error message
         });
 });
 
@@ -48,7 +72,7 @@ public_users.get('/isbn/:isbn', function (req, res) {
     })
     getBookByIsbn.then(book => res.send(JSON.stringify({ ...book }, null, 4))).catch((err) => {
         console.error(err.message); // Log error for debugging
-        res.status(500).json({ error: err.message }); // User-friendly error message
+        return res.status(500).json({ error: err.message }); // User-friendly error message
     });
 });
 
@@ -70,7 +94,7 @@ public_users.get('/author/:author', function (req, res) {
         }, 1000)
     })
     filterAuthorPromise.then(bookvals => res.send(JSON.stringify({...bookvals},null,4))).catch((err)=>{
-        res.status(400).json({ error: err.message }); // User-friendly error message
+        return res.status(400).json({ error: err.message }); // User-friendly error message
     })
 });
 
@@ -89,7 +113,7 @@ public_users.get('/title/:title', function (req, res) {
         }, 1000)
     })
     filterTitlePromise.then(bookvals => res.send(JSON.stringify({...bookvals},null,4))).catch((err)=>{
-        res.status(400).json({ error: err.message }); // User-friendly error message
+        return res.status(400).json({ error: err.message }); // User-friendly error message
     })
 });
 
@@ -100,7 +124,7 @@ public_users.get('/review/:isbn', function (req, res) {
     if(books[isbnVal]){
         res.send(JSON.stringify({...books[isbnVal]?.reviews},null,4))
     }else{
-        res.status(400).json({ error: "There is no such ISBN number associate with book for reviews"})
+        return res.status(400).json({ error: "There is no such ISBN number associate with book for reviews"})
     }
     // return res.status(300).json({ message: "Yet to be implemented" });
 });

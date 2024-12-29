@@ -5,7 +5,13 @@ const regd_users = express.Router();
 
 let users = [];
 
-const isValid = (username)=>{ //returns boolean
+const isValid = (username)=>{ 
+    const filteredUser = users.filter(user=> user.username === username)
+    if(filteredUser.length >0){
+        return true;
+    }
+    return false;
+    //returns boolean
 //write code to check is the username is valid
 }
 
