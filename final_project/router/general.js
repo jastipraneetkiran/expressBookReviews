@@ -34,7 +34,20 @@ public_users.get('/', function (req, res) {
 // Get book details based on ISBN
 public_users.get('/isbn/:isbn',function (req, res) {
   //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+  const isbn = req.params.isbn;
+  const getBookByIsbn = new Promise((resolve,reject)=>{
+    setTimeout(() => {if(!books[isbn]){
+        reject(new Error("For the given ISBN there is no book"))
+    }else{
+        const obj = {}
+        obj[isbn] = books[isbn]
+        resolve(obj)
+    }},1000)
+  })
+  getBookByIsbn.then(book => res.send(JSON.stringify({...book},null,4))).catch((err) => {
+      console.error(err.message); // Log error for debugging
+      res.status(500).json({ error: err.message }); // User-friendly error message
+    });
  });
   
 // Get book details based on author
